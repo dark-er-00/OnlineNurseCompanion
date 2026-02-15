@@ -4,6 +4,20 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 
+const cors = require("cors");
+app.use(cors());
+
+const path = require("path");
+
+app.use(express.static(path.join(__dirname, "../frontend")));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
+
+app.get("/symptom", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/symptom.html"));
+});
+
 mongoose.connect("mongodb+srv://dark-er-00:kitkat@onlinenursecompanion.yymi2nh.mongodb.net/online-nurse?retryWrites=true&w=majority")
 .then(() => {
     console.log("MongoDB Connected");

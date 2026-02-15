@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniWell – Your Online Nurse Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'medical-teal': '#0d9488',
+                        'medical-light': '#f0fdfa',
+                        'soft-sage': '#ecfdf5',
+                        'calm-blue': '#e0f2fe',
+                        'warm-cream': '#fffbeb',
+                        'alert-rose': '#fef2f2',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    </head>
+
+    <body>
+        <header>
+            <div class="logo">
+                <i class="fas fa-heart-pulse text-white text-lg" style="border-radius: 30%;"></i>
+                <span class="text-2xl font-serif font-semibold text-gray-800 tracking-tight">UniWell</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li class="text-gray-600 hover:text-teal-600 font-medium transition-colors">Home</li>
+                    <li class="text-gray-600 hover:text-teal-600 font-medium transition-colors">Resources</li>
+                    <li class="text-gray-600 hover:text-teal-600 font-medium transition-colors">About</li>
+                    <li class="text-gray-600 hover:text-teal-600 font-medium transition-colors"><i class="fas fa-lock mr-1"></i>Admin</li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="feature-section">
+            <div class="feature-search">
+                <input type="text" placeholder="Search symptomps, resources, or ask a question...">
+            <div class="feature-text">
+                <h1 class="text-5xl md:text-6xl font-serif font-semibold text-gray-800 leading-tight">How can I help you?</h1>
+            <p class="text-xl text-gray-500 font-light">Uniwell, your online Nurse Companion</p>
+            </div>
+            </div>
+
+            <div class="card-grid">
+
+                <a href="/symptom" class="card symptom block">
+                    <div class="icon teal"><i class="fas fa-stethoscope text-2xl text-teal-600"></i></div>
+                    <div class="card-text">
+                        <h3 class="font-semibold text-gray-800">Symptom Check</h3>
+                        <p class="text-xs text-gray-500 mt-1">Personal health diagnosis</p>
+                    </div>
+                </a>
+                
+                <div class="card mentalHealth">
+                    <div class="icon purple"><i class="fas fa-brain text-2xl text-purple-600"></i></div>
+                    <div class="card-text">
+                        <h3 class="font-semibold text-gray-800">Mental Health</h3>
+                        <p class="text-xs text-gray-500 mt-1">Mental well-being</p>
+                    </div>
+                </div>
+
+                <div class="card health">
+                    <div class="icon blue"> <i class="fas fa-circle-question text-2xl text-blue-600"></i></div>
+                    <div class="card-text">
+                        <h3 class="font-semibold text-gray-800">Health Questions</h3>
+                        <p class="text-xs text-gray-500 mt-1">FAQ and common injuries</p>
+                    </div>
+                </div>
+
+                <div class="card firstAid">
+                    <div class="icon red"><i class="fas fa-kit-medical text-2xl text-red-600"></i></div>
+                    <div class="card-text">
+                        <h3 class="font-semibold text-gray-800">First Aid Guide</h3>
+                        <p class="text-xs text-gray-500 mt-1">Immediate Response</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+            <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-2 text-gray-500 text-sm">
+                    <i class="fas fa-heart-pulse text-teal-500"></i>
+                    <span>UniWell – Supporting student health and wellness</span>
+                </div>
+                <div class="flex items-center space-x-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-teal-600 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-teal-600 transition-colors">Terms of Service</a>
+                    <button class="text-gray-400 hover:text-teal-600 transition-colors flex items-center space-x-1">
+                        <i class="fas fa-lock text-xs"></i>
+                        <span>Login as Admin</span>
+                    </button>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-xs text-gray-400">
+                <p>Note: UniWell provides general health information and is not a substitute for professional medical advice. In case of emergency, call 911 or your local emergency number.</p>
+            </div>
+        </div>
+    </footer>
+    </body>
+</html>

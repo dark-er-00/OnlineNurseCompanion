@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Symptom Check – UniWell</title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+        <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'medical-teal': '#0d9488',
+                        'medical-light': '#f0fdfa',
+                        'soft-sage': '#ecfdf5',
+                        'calm-blue': '#e0f2fe',
+                        'warm-cream': '#fffbeb',
+                        'alert-rose': '#fef2f2',
+                    }
+                }
+            }
+        }
+        </script>
+    </head>
+
+    <body class="bg-medical-light font-sans min-h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <i class="fas fa-heart-pulse text-medical-teal text-xl"></i>
+            <span class="text-2xl font-serif font-semibold text-gray-800">UniWell</span>
+        </div>
+        <a href="index.html" class="text-gray-600 hover:text-medical-teal font-medium">
+            ← Back to Home
+        </a>
+    </header>
+
+    <!-- FORM SECTION -->
+    <section class="flex-grow flex items-center justify-center px-4 py-10">
+
+    <div class="bg-white shadow-xl rounded-2xl w-full max-w-2xl p-8 animate-fade-in">
+
+        <h1 class="text-3xl font-serif font-semibold text-gray-800 mb-2">
+            Symptom Self-Check
+        </h1>
+        <p class="text-gray-500 mb-6">
+            Please answer honestly. This helps determine urgency.
+        </p>
+
+        <form id="checkForm" class="space-y-5">
+
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+                Full Name
+            </label>
+            <input type="text" id="name"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-medical-teal outline-none"
+                required>
+        </div>
+
+        <div>
+            <label for="painLevel" class="block text-sm font-medium text-gray-700 mb-1">
+                Pain Level (1–10)
+            </label>
+            <input type="number" id="painLevel"
+                min="1" max="10"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-medical-teal outline-none"
+                required>
+        </div>
+
+        <label for="hasFever" class="flex items-center space-x-2 cursor-pointer">
+            <input type="checkbox" id="hasFever" class="h-4 w-4">
+            <span>Do you have fever?</span>
+        </label>
+
+        <div>
+            <label for="durationDays" class="block text-sm font-medium text-gray-700 mb-1">
+                Duration (Days)
+            </label>
+            <input type="number" id="durationDays"
+                min="0"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-medical-teal outline-none"
+                required>
+        </div>
+
+        <label for="dangerSigns" class="flex items-center space-x-2 cursor-pointer">
+            <input type="checkbox" id="dangerSigns" class="h-4 w-4">
+            <span>Are there danger signs (breathing difficulty, chest pain)?</span>
+        </label>
+
+        <div>
+            <label for="mentalScore" class="block text-sm font-medium text-gray-700 mb-1">
+                Mental Distress Score (1–10)
+            </label>
+            <input type="number" id="mentalScore"
+                min="1" max="10"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-medical-teal outline-none"
+                required>
+        </div>
+
+        <label for="selfHarmThoughts" class="flex items-center space-x-2 cursor-pointer">
+            <input type="checkbox" id="selfHarmThoughts" class="h-4 w-4">
+            <span>Are you experiencing self-harm thoughts?</span>
+        </label>
+
+        <button type="submit"
+            class="w-full bg-medical-teal text-white py-3 rounded-lg hover:bg-teal-700 transition">
+            Submit Assessment
+        </button>
+
+        <!-- FLOATING MODAL -->
+        <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+            <div class="bg-white rounded-2xl p-8 w-full max-w-lg shadow-lg relative">
+                <button id="closeModal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800">
+                    &times;
+                </button>
+
+                <!-- MESSAGE ALERT -->
+                <div id="modalAlert" class="mb-4 p-3 bg-medical-teal text-white rounded-lg hidden"></div>
+
+                <div id="modalContent"></div>
+
+                <div id="consentButtons" class="mt-6 flex justify-center space-x-4 hidden">
+                    <button id="consentYes" class="bg-medical-teal text-white px-6 py-2 rounded-lg hover:bg-teal-700">
+                        Yes, send to Nurse
+                    </button>
+                    <button id="consentNo" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400">
+                        No, cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </form>
+
+        <div id="result" class="mt-6"></div>
+
+    </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 text-center py-4 text-sm text-gray-500">
+        UniWell – Supporting student health and wellness
+    </footer>
+
+
+    <script>
+    const form = document.getElementById("checkForm");
+    const modal = document.getElementById("modal");
+    const modalContent = document.getElementById("modalContent");
+    const consentButtons = document.getElementById("consentButtons");
+    const closeModal = document.getElementById("closeModal");
+    const consentYes = document.getElementById("consentYes");
+    const consentNo = document.getElementById("consentNo");
+
+    let isSubmitting = false;
+    let lastCaseId = null;
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        if (isSubmitting) {
+            alert("Form already submitted!");
+            return;
+        }
+
+        isSubmitting = true;
+
+        const data = {
+            name: document.getElementById("name").value.trim(),
+            painLevel: Number(document.getElementById("painLevel").value),
+            hasFever: document.getElementById("hasFever").checked,
+            durationDays: Number(document.getElementById("durationDays").value),
+            dangerSigns: document.getElementById("dangerSigns").checked,
+            mentalScore: Number(document.getElementById("mentalScore").value),
+            selfHarmThoughts: document.getElementById("selfHarmThoughts").checked
+        };
+
+        try {
+            const response = await fetch("http://localhost:3000/student/self-check", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            lastCaseId = result.caseId;
+
+            showModal(result);
+
+            form.reset(); // Clear all fields
+
+        } catch (error) {
+            console.error("Connection Error:", error);
+            alert("Cannot connect to backend.");
+            isSubmitting = false;
+        }
+    });
+
+    function showModal(result) {
+        const urgencyColor =
+            result.urgencyLevel === "URGENT"
+                ? "bg-alert-rose text-red-700"
+                : result.urgencyLevel === "MEDIUM"
+                ? "bg-warm-cream text-yellow-700"
+                : "bg-soft-sage text-green-700";
+
+        // Show assessment submitted message
+        const alertDiv = document.getElementById("modalAlert");
+        alertDiv.textContent = "Your assessment has been submitted!";
+        alertDiv.classList.remove("hidden");
+
+        let modalHtml = `
+            <div class="p-5 rounded-lg ${urgencyColor}">
+                <h2 class="text-lg font-semibold mb-2">Urgency Level: ${result.urgencyLevel}</h2>
+                <p><strong>What To Do:</strong> ${result.guidance.whatToDo}</p>
+                <p><strong>Monitor:</strong> ${result.guidance.whatToMonitor}</p>
+                <p><strong>When To Seek Help:</strong> ${result.guidance.whenToSeekHelp}</p>
+                <p><strong>Restrictions:</strong> ${result.guidance.restrictions}</p>
+            </div>
+        `;
+
+        if (result.urgencyLevel === "LOW" || result.urgencyLevel === "MEDIUM") {
+            modalHtml += `
+                <p class="mt-4 text-gray-700 text-center">
+                    Do you give consent to be directed to the school nurse?
+                </p>
+            `;
+            consentButtons.style.display = "flex";
+        } else {
+            modalHtml += `
+                <p class="mt-4 text-red-700 font-semibold text-center">
+                    You will be directed to the school nurse immediately.
+                </p>
+            `;
+            consentButtons.style.display = "none";
+        }
+
+        modalContent.innerHTML = modalHtml;
+        modal.classList.remove("hidden");
+    }
+
+
+    // Close modal
+    closeModal.addEventListener("click", () => {
+        modal.classList.add("hidden");
+        isSubmitting = false;
+    });
+
+    // Consent buttons
+    consentYes.addEventListener("click", async () => {
+        await updateConsent(true);
+    });
+
+    consentNo.addEventListener("click", async () => {
+        await updateConsent(false);
+    });
+
+    async function updateConsent(consent) {
+        try {
+            await fetch(`http://localhost:3000/student/consent/${lastCaseId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ consent })
+            });
+
+            modal.classList.add("hidden");
+            isSubmitting = false;
+            lastCaseId = null;
+
+        } catch (error) {
+            console.error("Consent update failed:", error);
+            alert("Failed to update consent.");
+            isSubmitting = false;
+        }
+    }
+    </script>
+
+</body>
+</html>
