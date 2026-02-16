@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Questions – UniWell</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-teal-50 min-h-screen">
+
+<div class="max-w-4xl mx-auto py-12 px-6">
+
+    <h1 class="text-4xl font-bold text-center text-teal-600 mb-10">
+        Frequently Asked Health Questions
+    </h1>
+
+    <div class="space-y-4">
+
+        <!-- FAQ Item -->
+        <div class="bg-white rounded-xl shadow p-5">
+            <button onclick="toggleFAQ(this)" class="w-full text-left font-semibold text-lg">
+                What should I do if I have a fever?
+            </button>
+            <p class="mt-3 hidden text-gray-600">
+                Rest, drink plenty of fluids, and monitor your temperature.
+                Seek medical help if fever is above 39°C or lasts more than 3 days.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow p-5">
+            <button onclick="toggleFAQ(this)" class="w-full text-left font-semibold text-lg">
+                When should I see a nurse for headache?
+            </button>
+            <p class="mt-3 hidden text-gray-600">
+                If the headache is severe, persistent, accompanied by vision problems,
+                vomiting, or confusion.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow p-5">
+            <button onclick="toggleFAQ(this)" class="w-full text-left font-semibold text-lg">
+                Is stress affecting my physical health?
+            </button>
+            <p class="mt-3 hidden text-gray-600">
+                Yes. Chronic stress can cause fatigue, headaches, sleep issues,
+                and weakened immune system.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow p-5">
+            <button onclick="toggleFAQ(this)" class="w-full text-left font-semibold text-lg">
+                What are signs of dehydration?
+            </button>
+            <p class="mt-3 hidden text-gray-600">
+                Dry mouth, dizziness, dark urine, fatigue, and headache.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow p-5">
+            <button onclick="toggleFAQ(this)" class="w-full text-left font-semibold text-lg">
+                When is chest pain an emergency?
+            </button>
+            <p class="mt-3 hidden text-gray-600">
+                If it feels heavy, crushing, spreads to arm or jaw, or comes with
+                difficulty breathing — seek emergency care immediately.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="text-center mt-10">
+        <a href="/" class="text-teal-600 font-semibold">← Back to Home</a>
+    </div>
+
+</div>
+
+<script>
+function toggleFAQ(button) {
+    const answer = button.nextElementSibling;
+    answer.classList.toggle("hidden");
+}
+</script>
+
+</body>
+</html>

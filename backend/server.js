@@ -235,3 +235,16 @@ app.get("/nurse/cases", async (req, res) => {
 
     res.json(casesForNurse);
 });
+
+
+app.get("/health-questions", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/health-questions.html"));
+});
+
+app.get("/first-aid", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/first-aid.html"));
+});
+
+app.get("/mental", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/mental.html"));
+});

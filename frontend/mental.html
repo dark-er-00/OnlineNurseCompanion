@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mental Health Check – UniWell</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-teal-50 min-h-screen flex items-center justify-center">
+
+<div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-lg">
+
+    <h2 class="text-2xl font-bold text-teal-600 mb-6 text-center">
+        Mental Health Self-Check
+    </h2>
+
+    <form id="mentalForm" class="space-y-4">
+
+        <input type="text" id="name" placeholder="Your Name"
+            class="w-full p-3 border rounded-lg" required>
+
+        <div>
+            <label class="block mb-2 font-medium">Stress Level (1–10)</label>
+            <input type="number" id="mentalScore" min="1" max="10"
+                class="w-full p-3 border rounded-lg" required>
+        </div>
+
+        <div class="flex items-center space-x-2">
+            <input type="checkbox" id="selfHarmThoughts">
+            <label>Have you had thoughts of self-harm?</label>
+        </div>
+
+        <button type="submit"
+            class="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition">
+            Submit Check
+        </button>
+    </form>
+
+    <div id="result" class="mt-6 hidden"></div>
+</div>
+
+
+<!-- Consent Modal -->
+<div id="consentModal"
+    class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+
+    <div class="bg-white p-6 rounded-xl shadow-lg w-96">
+
+        <h3 class="text-lg font-semibold mb-3">
+            Send to School Nurse?
+        </h3>
+
+        <p class="text-sm text-gray-600 mb-4">
+            Would you like your result to be sent to the school nurse?
+        </p>
+
+        <div class="flex justify-end space-x-3">
+            <button onclick="sendConsent(true)"
+                class="bg-teal-600 text-white px-4 py-2 rounded">
+                Yes
+            </button>
+
+            <button onclick="sendConsent(false)"
+                class="bg-gray-400 text-white px-4 py-2 rounded">
+                No
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentCaseId = null;
+
+document.getElementById("mentalForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById("name").value,
+        painLevel: 0,
+        hasFever: false,
+        durationDays: 0,
+        dangerSigns: false,
+        mentalScore: Number(document.getElementById("mentalScore").value),
+        selfHarmThoughts: document.getElementById("selfHarmThoughts").checked
+    };
+
+    const response = await fetch("/student/self-check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    currentCaseId = result.caseId;
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.classList.remove("hidden");
+
+    resultDiv.innerHTML = `
+        <div class="p-4 rounded-lg bg-teal-100">
+            <h3 class="font-bold">Urgency Level: ${result.urgencyLevel}</h3>
+            <p class="mt-2">${result.guidance.whatToDo}</p>
+        </div>
+    `;
+
+    if (result.urgencyLevel !== "URGENT") {
+        document.getElementById("consentModal").classList.remove("hidden");
+        document.getElementById("consentModal").classList.add("flex");
+    }
+});
+
+async function sendConsent(choice) {
+
+    await fetch(`/student/consent/${currentCaseId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ consent: choice })
+    });
+
+    document.getElementById("consentModal").classList.add("hidden");
+
+    alert(choice ? "Case sent to nurse." : "Case closed.");
+}
+</script>
+
+</body>
+</html>
