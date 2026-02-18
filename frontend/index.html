@@ -47,6 +47,44 @@
                 }
             }
         }
+
+        function loadChatWidget() {
+            if (!document.getElementById("ghl-chat-script")) {
+                const script = document.createElement("script");
+                script.id = "ghl-chat-script";
+                script.src = "https://widgets.leadconnectorhq.com/loader.js";
+                script.setAttribute("data-resources-url", "https://widgets.leadconnectorhq.com/chat-widget/loader.js");
+                script.setAttribute("data-widget-id", "69913f5da0e96a88091fcd46");
+                script.async = true;
+
+                document.body.appendChild(script);
+            }
+
+            showChatNotice();
+        }
+
+        function showChatNotice() {
+            const existingNotice = document.getElementById("chat-notice");
+            if (existingNotice) {
+                existingNotice.remove();
+            }
+
+            const notice = document.createElement("div");
+            notice.id = "chat-notice";
+            notice.innerHTML = `
+                💬 Chat is ready!  
+                Please click the chat button at the bottom-right corner.
+            `;
+
+            notice.className =
+                "fixed bottom-20 right-6 bg-teal-600 text-white px-4 py-3 rounded-xl shadow-lg text-sm z-50 animate-fade-in";
+
+            document.body.appendChild(notice);
+
+            setTimeout(() => {
+                notice.remove();
+            }, 4000);
+        }
     </script>
     </head>
 
@@ -68,17 +106,14 @@
         </header>
 
         <section class="feature-section">
-            <div class="feature-search">
-                <input type="text" placeholder="Search symptomps, resources, or ask a question...">
-            <div class="feature-text">
-                <h1 class="text-5xl md:text-6xl font-serif font-semibold text-gray-800 leading-tight">How can I help you?</h1>
-            <p class="text-xl text-gray-500 font-light">Uniwell, your online Nurse Companion</p>
-            </div>
-            </div>
+                <div class="feature-text">
+                    <h1 class="text-5xl md:text-6xl font-serif font-semibold text-gray-800 leading-tight">How can I help you?</h1>
+                <p class="text-xl text-gray-500 font-light">Uniwell, your online Nurse Companion</p>
+                </div>
 
             <div class="card-grid">
 
-                <a href="/symptom" class="card symptom block">
+                <a onclick="loadChatWidget()" class="card symptom block">
                     <div class="icon teal"><i class="fas fa-stethoscope text-2xl text-teal-600"></i></div>
                     <div class="card-text">
                         <h3 class="font-semibold text-gray-800">Symptom Check</h3>
